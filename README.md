@@ -1,4 +1,4 @@
-#linux_configs
+# linux_configs
 
 Contains my standard dotfiles and other configuration files. Comes with scripst to link them to the relevant location and build the list to use for said linking.
 
