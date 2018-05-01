@@ -1,0 +1,119 @@
+#!/bin/sh
+
+# Loads in all your custom dotfiles from a config directory and symlinks them into your home
+
+# All the dotfiles to load shouldn't actually have the dot in their name. Ex, ".nanorc" would simply be "nanorc" in the config directory
+# It automatically adds the . as a prefix when it symlinks the files
+
+# By default, loads everything but the files listed in $filesAbnormal
+# Can by passed "-a" or "--all" as the first arg to load all files instead
+
+# Normally will load your custom dotfiles from the ~/configs directory
+# You can pass a second (or first if no --all) argument which is the path to a different config directory
+
+filesNotLink=("README" "applyConfigs")
+filesAbnormal=("bashrc" "bash_aliases")
+
+# If we pass along the all flag, we want to link everything
+if [ "$1" == "--all" ] || [ "$1" == "-a" ]
+then
+    linkingAll="true"
+
+    # Don't forget to shift the paramaters!
+    shift
+else
+    linkingAll="false"
+fi
+
+# Checks if there's another arg, the config path
+if [ $# -eq 1 ]
+then
+    configDir="$1"
+    # Don't forget to shift!
+    shift
+else
+    # Default is just in the home directory
+    configDir="$HOME/configs"
+fi
+
+# Returns whether or not to link the supplied file
+# Exit code of 0 if linking, 1 if not linking
+shouldILink()
+{
+    echo $(fileNotMatcher "$1" ${filesNotLink[@]})
+    exit $?
+}
+
+# Returns whether or not the supplied file is a normal file
+# Exit code of 0 if normal, 1 if abnormal
+normalFile()
+{
+    echo $(fileNotMatcher "$1" ${filesAbnormal[@]})
+    exit $?
+}
+
+# Returns true if the file in arg1 doesn't match the file array in arg2
+# Exit code of 0 if not matching, 1 if it does match
+fileNotMatcher()
+{
+    # Store the file and move it off the args
+    file="$1"
+    shift
+
+    # Make an array out of the rest of the args, aka, the array we passed it
+    arr=("$@")
+
+    for i in "${arr[@]}"
+    do
+        if [ "$file" == "./$i" ]
+        then
+            echo "false"
+            exit 1
+        fi
+    done
+
+    echo "true"
+    exit 0
+}
+
+mainFunc()
+{
+    while [ $# -gt 0 ]
+    do
+        doLink=$(shouldILink "$1")
+
+        # If we want to link the file, then do it!
+        if [ "$doLink" == "true" ]
+        then
+            # Are we linking every file?
+            if [ "$linkingAll" == "true" ]
+            then
+                # If so, every file is normal
+                isNormal="true"
+            else
+                # Otherwise, figure out if it's actually normal
+                isNormal=$(normalFile "$1")
+            fi
+
+            # Now finally, if the file is normal too it's time to link
+            if [ "$isNormal" == "true" ]
+            then
+                # Actually link the file
+                myItem=$(echo "$1" | grep -o "[^./]*$")
+                echo "ln -sf $1 ~/.$myItem"
+                # ln -sf $1 ~/.$myItem
+            fi
+
+        fi
+
+        # Regardless of anything, shift along to the next parameter
+        shift
+    done
+}
+
+# Change to the config directory
+cd "$configDir"
+
+# Get an array of all the files in said directory
+myFiles=(./*)
+mainFunc ${myFiles[@]}

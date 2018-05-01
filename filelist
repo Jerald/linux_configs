@@ -1,0 +1,8 @@
+File Name,Category,Link Path,Prefix
+nanorc,nano|standard,~/,.
+screenrc,screen|standard,~/,.
+zshrc,zsh|standard,~/,.
+bashrc,bash,~/,.
+bash_aliases,bash,~/,.
+aliases.zsh,zsh|standard,~/.oh-my-zsh/custom/,
+clean-custom.zsh-theme,zsh|standard,~/.oh-my-zsh/custom/,

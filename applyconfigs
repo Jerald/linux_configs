@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# Takes a number of optional arguments:
+# -f or --file: specifies a different file to load the config list from
+# -a or --all: makes it link all files in the config source folder
+# -s or --source: changes the path to the config source folder
+# The final argument is flag-less. This specifies the category of config files to link. Defaults to "standard"
+
+#######################################################################
+
+# What separates the filelist
+sepVar=","
+
+# Default file name
+filename="filelist"
+# Which category of configs to link
+category="standard"
+# Whether or not to link all configs
+all="false"
+# Source file path
+sourcePath=$(cd ./files; echo $PWD)
+sourcePath+="/"
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+    -f|--file)
+        shift
+        filename="$1"
+        shift
+        ;;
+    -a|--all)
+        all="true"
+        shift
+        ;;
+    -s|--source)
+        shift
+        sourcePath="$1"
+        shift
+        ;;
+    *)
+        category="$1"
+        shift
+        ;;
+    esac
+done
+
+mapfile -t array < "$filename"
+
+for index in ${!array[@]}
+do
+    IFS="$sepVar" read -r -a nArray <<< "${array[index]}"
+    array[$index]=${nArray[@]}
+done
+
+# Remove header
+unset array[0]
+
+for i in "${array[@]}"
+do
+    IFS=" " read -r -a entry <<< "$i"
+
+    # echo "$i"
+
+    fileName="${entry[0]}"
+    IFS="|" read -r -a fileCategory <<< "${entry[1]}"
+    filePath=${entry[2]/#\~/$HOME}
+    filePrefix=${entry[3]}
+
+    categMatch="false"
+
+    for categ in ${fileCategory[@]}
+    do
+        if [ "$categ" == "$category" ]
+        then
+            categMatch="true"
+        fi
+    done
+
+    if [ "$categMatch" == "true" ] || [ "$all" == "true" ]
+    then
+        echo "ln -sf $sourcePath$fileName $filePath$filePrefix$fileName"
+        ln -sf $sourcePath$fileName $filePath$filePrefix$fileName
+    fi
+done
