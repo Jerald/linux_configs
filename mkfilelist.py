@@ -65,10 +65,10 @@ def view(uInput=""):
             print(entry)
 
         return
-    
-    from tabulate import tabulate
+
     print()
-    print(tabulate(table, splitHeaders, "orgtbl"))
+    #Dirty Hack (tm). I modified the tabulate source to use the arguments as specified by that symbol tablle
+    exec(open(".tabulate.py").read(), {"mArg1": table, "mArg2": splitHeaders, "mArg3": "orgtbl"})
     print()
     return
 
