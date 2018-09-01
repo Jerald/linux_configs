@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Takes a number of optional arguments:
 # -f or --file: specifies a different file to load the config list from

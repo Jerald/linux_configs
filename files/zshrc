@@ -69,6 +69,10 @@ plugins=(
   screen
   sudo
   web-search
+  cargo
+  man
+  rust
+  zsh_reload
 )
 
 

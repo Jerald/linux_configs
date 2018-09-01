@@ -20,10 +20,10 @@ def readWholeFile():
     line = fileobj.readline()
     while line != "":
         splitLine = line.split(retroSepVar)
-        
+
         # Remove trailing newline on last element
         splitLine[-1] = splitLine[-1][:-1]
-        
+
         tempTable.append(splitLine)
         line = fileobj.readline()
 
@@ -45,7 +45,7 @@ def headersFunc(uInput):
 
 def add(uInput):
     entry = []
-    
+
     for header in splitHeaders:
         try:
             entry.append(input(header + ": "))
@@ -67,7 +67,7 @@ def view(uInput=""):
         return
 
     print()
-    #Dirty Hack (tm). I modified the tabulate source to use the arguments as specified by that symbol tablle
+    #Dirty Hack (tm). I modified the tabulate source to use the arguments as specified by that symbol table
     exec(open(".tabulate.py").read(), {"mArg1": table, "mArg2": splitHeaders, "mArg3": "orgtbl"})
     print()
     return
@@ -169,5 +169,3 @@ while True:
         switchDict[userInput[0]](userInput)
     else:
         otherwise(userInput)
-
-
