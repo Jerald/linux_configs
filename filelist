@@ -6,3 +6,7 @@ bashrc,bash,~/,.
 bash_aliases,bash,~/,.
 aliases.zsh,zsh|standard,~/.oh-my-zsh/custom/,
 clean-custom.zsh-theme,zsh|standard,~/.oh-my-zsh/custom/,
+config,standard|i3,~/.config/i3/,
+gitconfig,standard|git,~/,.
+xinitrc,standard|xorg,~/,.
+xserverrc,standard|xorg,~/,.

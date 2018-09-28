@@ -1,0 +1,15 @@
+[user]
+	name = Oscar
+	email = osmithsi@sfu.ca
+	signingkey = F6BA19353B8B3460
+	
+[commit]
+	gpgsign = true
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+    pager = true

@@ -1,0 +1,3 @@
+#!/bin/sh
+mytty=$((XDG_VTNR + 0))
+exec /usr/bin/X -nolisten tcp "$@" vt$mytty
