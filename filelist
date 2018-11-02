@@ -1,12 +1,13 @@
 File Name,Category,Link Path,Prefix
-nanorc,nano|standard,~/,.
-screenrc,screen|standard,~/,.
-zshrc,zsh|standard,~/,.
+nanorc,standard|nano,~/,.
+screenrc,standard|screen,~/,.
+zshrc,standard|zsh,~/,.
 bashrc,bash,~/,.
 bash_aliases,bash,~/,.
-aliases.zsh,zsh|standard,~/.oh-my-zsh/custom/,
-clean-custom.zsh-theme,zsh|standard,~/.oh-my-zsh/custom/,
+aliases.zsh,standard|zsh,~/.oh-my-zsh/custom/,
+clean-custom.zsh-theme,standard|zsh,~/.oh-my-zsh/custom/,
 config,standard|i3,~/.config/i3/,
 gitconfig,standard|git,~/,.
 xinitrc,standard|xorg,~/,.
 xserverrc,standard|xorg,~/,.
+i3status.conf,standard|i3,~/,.
